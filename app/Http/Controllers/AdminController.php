@@ -36,7 +36,7 @@ class AdminController extends Controller
         );
         $brand = new Brand();
         $brand->name = $request->name;
-        $brand->slog = Str::slug($request->name);
+        $brand->slug = Str::slug($request->name);
         $image = $request->file('image');
         $file_extention =   $request->file('image')->extension();
         $file_name = Carbon::now()->timestamp . '.' . $file_extention;
@@ -46,28 +46,28 @@ class AdminController extends Controller
         return redirect()->route('admin.brands')->with('status', 'Brand has been added susscessfully');
     }
 
-    public function GenerateBrandThumbnailsImage($image, $imagename)
+    public function GenerateBrandThumbnailsImage($image, $imageName)
     {
-        // $destinationPath = public_path('uploads/brands');
-        // $img = Image::read($image->path);
-        // $img->cover(124, 124, "top");
-        // $img->resize(124, 124, function ($constraint) {
-        //     $constraint->aspectRatio();
-        // })->save($destinationPath . '/' . $imagename);
-
-
         $destinationPath = public_path('uploads/brands');
-
-        // สร้างอ็อบเจ็กต์ภาพ
-        $img = Image::make($image->path()); // ใช้ make() แทน read()
-
-        // ปรับขนาดให้พอดีกับ 124x124 โดยรักษาอัตราส่วนและครอบถ้าจำเป็น
-        $img->fit(124, 124, function ($constraint) {
+        $img = Image::read($image->path());
+        $img->cover(124, 124, "top");
+        $img->resize(124, 124, function ($constraint) {
             $constraint->aspectRatio();
-            $constraint->upsize(); // ป้องกันการขยายภาพ
-        });
+        })->save($destinationPath . '/' . $imageName);
 
-        // บันทึกภาพ
-        $img->save($destinationPath . '/' . $imagename);
+
+        // $destinationPath = public_path('uploads/brands');
+
+        // // สร้างอ็อบเจ็กต์ภาพ
+        // $img = Image::make($image->path()); // ใช้ make() แทน read()
+
+        // // ปรับขนาดให้พอดีกับ 124x124 โดยรักษาอัตราส่วนและครอบถ้าจำเป็น
+        // $img->fit(124, 124, function ($constraint) {
+        //     $constraint->aspectRatio();
+        //     $constraint->upsize(); // ป้องกันการขยายภาพ
+        // });
+
+        // // บันทึกภาพ
+        // $img->save($destinationPath . '/' . $imageName);
     }
 }
