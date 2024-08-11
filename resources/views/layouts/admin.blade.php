@@ -172,6 +172,17 @@
                                         <div class="text">Settings</div>
                                     </a>
                                 </li>
+                                <li class="menu-item">
+                                    <form action="{{ route('logout') }}" method="POST" id="logout-form">
+                                        @csrf
+                                        <a href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();document.getElementById('logout-form').submit();"
+                                            class="">
+                                            <div class="icon"><i class="icon-settings"></i></div>
+                                            <div class="text">Logout</div>
+                                        </a>
+                                    </form>
+                                </li>
                             </ul>
                         </div>
                     </div>
